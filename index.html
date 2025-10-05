@@ -353,9 +353,6 @@
             cityName.textContent = city.name;
             cityDescription.textContent = city.description;
 
-            // Update wave animations
-            updateWaveAnimations(city.animationClass);
-
             // Update map chips
             document.querySelectorAll('.city-chip').forEach(chip => {
                 chip.classList.toggle('active', chip.dataset.city === cityId);
@@ -426,22 +423,10 @@
         function playCitySounds(cityId) {
             console.log(`Playing sounds for: ${cityId}`);
             console.log('Active layers:', activeLayers);
-
-            // TODO: Implement actual audio playback
-            // Example structure:
-            // - Load audio files for the selected city
-            // - Play/pause layers based on activeLayers state
-            // - Sync with wave visualizations
         }
 
         function updateAudioLayers() {
             console.log('Updating audio layers:', activeLayers);
-
-            // TODO: Implement layer mixing
-            // Example structure:
-            // - Adjust volume/mute for each layer
-            // - Update wave visualizations
-            // - Maintain smooth transitions
         }
 
         // ===========================
