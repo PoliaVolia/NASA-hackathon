@@ -44,7 +44,7 @@ body {
 
 .main-title {
     font-size: 5.4rem;
-    color: var(--secondary-color);
+    color: var(--text-dark);
 }
 
 /* LEFT SECTION */
@@ -57,23 +57,53 @@ body {
     justify-content: center;
 }
 
-.right{
+.right {
     background-color: white;
 }
 
 .credits {
     font-size: 0.9rem;
     color: var(--text-lighter);
-    margin-bottom: 15px;
-    text-align: right;
+    margin-bottom: 30px;
     font-style: italic;
 }
 
 .description {
-    color: var(--secondary-color);
-    margin-top: 0.5rem;
-    font-size: 1.3rem;
-    margin-bottom: 20px;
+    font-size: 1rem;
+    color: var(--text-lighter);
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+a {
+  color: var(--text-lighter);
+}
+
+a:hover {
+  color:var(--secondary-color);
+}
+
+
+.pause-play-btn {
+    padding: 12px 24px;
+    width: 150px;
+    background: var(--primary-color);
+    color: var(--text-dark);
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 20px;
+}
+
+.pause-play-btn:hover {
+    transform: translateY(-2px);
+}
+
+.pause-play-btn:active {
+    transform: translateY(0);
 }
 
 .checkbox-group {
@@ -142,13 +172,13 @@ body {
     padding-right: 2rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
+    gap: 10px;
 }
 
 .data-item {
-    background-color: var(--primary-color);
+    /* background-color: var(--primary-color); */
     overflow: hidden;
-    border-radius: 100px;
+    /* border-radius: 100px; */
 }
 
 .checkbox-label {
@@ -162,9 +192,9 @@ body {
 .data-label {
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: var(--bg-light);
+    color: var(--text-lighter);
     margin-top: 5px;
-    margin-left: 50px;
+    /* margin-left: 50px; */
 }
 
 .data-value {

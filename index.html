@@ -19,11 +19,9 @@
         <!-- LEFT SIDE -->
         <section class="left">
             <h1 class="climate-crisis main-title">Urban beats</h1>
-            <p class="description">
-                We turned real environmental data into soundscapes to help you understand and connect with the health of
-                your surroundings.
-            </p>
-
+            <p class="credits">Created by <a href="https://www.linkedin.com/in/polia-volia/">Polina Volia</a>, Yuliia
+                Moroz and <a href="mailto:chinenko2002@gmail.com">Sergei Zakharov</a> during the 2025 NASA Space
+                Apps Challenge</p>
             <div class="checkbox-group">
 
                 <div data-layer="air">
@@ -44,12 +42,17 @@
                     <label for="population-toggle" class="checkbox-label">Population</label>
                 </div>
             </div>
+            <button id="pause-play-button" class="pause-play-btn">Pause All</button>
 
         </section>
 
         <!-- RIGHT SIDE -->
         <section class="right">
-            <p class="credits">Created by <a href="https://www.linkedin.com/in/polia-volia/">Polina Volia</a>, Yuliia Moroz and <a href="mailto:chinenko2002@gmail.com">Sergei Zakharov</a> during the 2025 NASA Space Apps Challenge</p>
+
+            <p class="description">We turned real environmental data into soundscapes <br>to help you understand and connect
+                with the health of
+                your surroundings.</p>
+
             <div class="chip-group">
                 <div class="city-list-chip" data-city="cork">Cork</div>
                 <div class="city-list-chip active" data-city="dublin">Dublin</div>
@@ -86,7 +89,7 @@
                         <div class="data-label">Air Pollution</div>
                         <div class="wave-container" data-layer="air">
                             <svg viewBox="0 0 1000 200" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-                                <path d="" fill="#404040">
+                                <path d="" fill="#1C1C1C">
                                     <animate attributeName="d" dur="1.0s" repeatCount="indefinite" values="" />
                                 </path>
                             </svg>
@@ -97,7 +100,7 @@
                         <div class="data-label">Noise Pollution</div>
                         <div class="wave-container" data-layer="noise">
                             <svg viewBox="0 0 1000 200" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-                                <path d="" fill="#404040">
+                                <path d="" fill="#1C1C1C">
                                     <animate attributeName="d" dur="1.0s" repeatCount="indefinite" values="" />
                                 </path>
                             </svg>
@@ -107,7 +110,7 @@
                         <div class="data-label">Green Covarage</div>
                         <div class="wave-container" data-layer="green">
                             <svg viewBox="0 0 1000 200" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-                                <path d="" fill="#404040">
+                                <path d="" fill="#1C1C1C">
                                     <animate attributeName="d" dur="1.0s" repeatCount="indefinite" values="" />
                                 </path>
                             </svg>
@@ -117,7 +120,7 @@
                         <div class="data-label">Population</div>
                         <div class="wave-container" data-layer="population">
                             <svg viewBox="0 0 1000 200" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-                                <path d="" fill="#404040">
+                                <path d="" fill="#1C1C1C">
                                     <animate attributeName="d" dur="1.0s" repeatCount="indefinite" values="" />
                                 </path>
                             </svg>
@@ -557,6 +560,11 @@
         function updateAudioLayers() {
             console.log('Updating audio layers:', activeLayers);
 
+            // Don't play anything if globally paused
+            if (isAllPaused) {
+                return;
+            }
+
             // Play or pause each track based on active layers
             Object.keys(audioTracks).forEach(layer => {
                 const audio = audioTracks[layer];
@@ -572,6 +580,28 @@
                 }
             });
         }
+
+        // ===========================
+        // PAUSE/PLAY CONTROL
+        // ===========================
+        let isAllPaused = false;
+        const pausePlayButton = document.getElementById('pause-play-button');
+
+        pausePlayButton.addEventListener('click', () => {
+            isAllPaused = !isAllPaused;
+
+            if (isAllPaused) {
+                // Pause all audio tracks
+                Object.values(audioTracks).forEach(audio => {
+                    audio.pause();
+                });
+                pausePlayButton.textContent = 'Play All';
+            } else {
+                // Resume audio based on active layers
+                updateAudioLayers();
+                pausePlayButton.textContent = 'Pause All';
+            }
+        });
 
         // ===========================
         // EVENT LISTENERS
