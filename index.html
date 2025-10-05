@@ -49,6 +49,7 @@
 
         <!-- RIGHT SIDE -->
         <section class="right">
+            <p class="credits">Created by <a href="https://www.linkedin.com/in/polia-volia/">Polina Volia</a>, Yuliia Moroz and <a href="mailto:chinenko2002@gmail.com">Sergei Zakharov</a> during the 2025 NASA Space Apps Challenge</p>
             <div class="chip-group">
                 <div class="city-list-chip" data-city="cork">Cork</div>
                 <div class="city-list-chip active" data-city="dublin">Dublin</div>
@@ -162,8 +163,8 @@
                 },
                 audioLevels: {
                     air: 4,
-                    noise: 1,
-                    green: 5,
+                    noise: 5,
+                    green: 1,
                     population: 5
                 }
             },
@@ -196,8 +197,8 @@
                 },
                 audioLevels: {
                     air: 1,
-                    noise: 2,
-                    green: 1,
+                    noise: 1,
+                    green: 2,
                     population: 2
                 }
             },
@@ -213,8 +214,8 @@
                 },
                 audioLevels: {
                     air: 1,
-                    noise: 5,
-                    green: 1,
+                    noise: 1,
+                    green: 5,
                     population: 1
                 }
             },
@@ -247,8 +248,8 @@
                 },
                 audioLevels: {
                     air: 1,
-                    noise: 2,
-                    green: 1,
+                    noise: 1,
+                    green: 2,
                     population: 1
                 }
             },
@@ -516,10 +517,14 @@
             population: new Audio()
         };
 
-        // Set all tracks to loop
+        // Set all tracks to loop and adjust volumes
         Object.values(audioTracks).forEach(audio => {
             audio.loop = true;
         });
+
+        // Adjust volume levels: noise louder, population quieter
+        audioTracks.noise.volume = 1.0;      // Noise at maximum volume
+        audioTracks.population.volume = 0.5; // Population half quieter
 
         function playCitySounds(cityId) {
             console.log(`Playing sounds for: ${cityId}`);

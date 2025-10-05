@@ -61,6 +61,14 @@ body {
     background-color: white;
 }
 
+.credits {
+    font-size: 0.9rem;
+    color: var(--text-lighter);
+    margin-bottom: 15px;
+    text-align: right;
+    font-style: italic;
+}
+
 .description {
     color: var(--secondary-color);
     margin-top: 0.5rem;
