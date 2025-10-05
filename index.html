@@ -327,9 +327,7 @@
             }
         };
 
-        // ===========================
-        // STATE MANAGEMENT
-        // ===========================
+
         let currentCity = 'dublin';
         let activeLayers = {
             air: true,
@@ -338,20 +336,14 @@
             population: true
         };
 
-        // ===========================
-        // DOM ELEMENTS
-        // ===========================
         const cityImage = document.getElementById('city-image');
         const cityName = document.querySelector('.city-name');
         const cityDescription = document.getElementById('city-description');
         const waveContainers = document.querySelectorAll('.wave-container');
 
 
-        // ===========================
-        // CITY SELECTION
-        // ===========================
         function selectCity(cityId) {
-            // Check if city exists in data
+
             if (!cityData[cityId]) {
                 console.error(`City data not found for: ${cityId}`);
                 return;
@@ -360,13 +352,12 @@
             currentCity = cityId;
             const city = cityData[cityId];
 
-            // Update left panel
             cityImage.src = city.image;
             cityImage.alt = city.name;
             cityName.textContent = city.name;
             cityDescription.textContent = city.description;
 
-            // Update SVG wave paths and animations
+
             document.querySelectorAll('.wave-container').forEach(container => {
                 const layer = container.dataset.layer;
                 const svgPath = container.querySelector('path');
@@ -376,44 +367,35 @@
                     const level = city.audioLevels[layer];
                     const animConfig = waveAnimations[`level${level}`];
 
-                    // Set initial path
+                 
                     svgPath.setAttribute('d', city.svgPaths[layer]);
 
-                    // Configure the animate element
+                    
                     if (animConfig.paths.length > 0) {
-                        // If wave animation paths are defined, use them
                         animateElement.setAttribute('values', animConfig.paths.join(';'));
                         animateElement.setAttribute('dur', animConfig.duration);
                     } else {
-                        // Fallback: use the static path if no animation paths defined yet
-                        // You can add your wave variations to waveAnimations.levelX.paths array
                         animateElement.setAttribute('values', '');
                         animateElement.setAttribute('dur', animConfig.duration);
                     }
                 }
             });
 
-            // Update map chips
             document.querySelectorAll('.city-chip').forEach(chip => {
                 chip.classList.toggle('active', chip.dataset.city === cityId);
             });
 
-            // Update list chips
             document.querySelectorAll('.city-list-chip').forEach(chip => {
                 chip.classList.toggle('active', chip.dataset.city === cityId);
             });
 
-            // Trigger sound playback
             playCitySounds(cityId);
         }
 
-        // ===========================
-        // SOUND LAYER TOGGLES
-        // ===========================
+      
         function toggleSoundLayer(layer) {
             activeLayers[layer] = !activeLayers[layer];
 
-            // Update visual state
             const toggleItem = document.querySelector(`[data-layer="${layer}"]`);
             if (toggleItem) {
                 const checkbox = toggleItem.querySelector('.toggle-checkbox');
@@ -422,15 +404,9 @@
                 }
             }
 
-            // Update audio (hook for future implementation)
             updateAudioLayers();
         }
 
-        // ===========================
-        // WAVE ANIMATION DATA
-        // ===========================
-        // Animation durations and wave variations for each pollution level
-        // Add 3+ path variations for each level to create morphing wave animations
         const waveAnimations = {
             level1: {
                 duration: "1.0s",
@@ -479,9 +455,7 @@
             }
         };
 
-        // ===========================
-        // AUDIO FUNCTIONS
-        // ===========================
+ 
         const audioFilePaths = {
             air: {
                 1: 'audio/air/level-1.mp3',
@@ -513,7 +487,6 @@
             },
         };
 
-        // Create audio objects for each layer
         const audioTracks = {
             air: new Audio(),
             green: new Audio(),
@@ -521,32 +494,27 @@
             population: new Audio()
         };
 
-        // Set all tracks to loop and adjust volumes
         Object.values(audioTracks).forEach(audio => {
             audio.loop = true;
         });
 
-        // Adjust volume levels: noise louder, population quieter
-        audioTracks.noise.volume = 1.0;      // Noise at maximum volume
-        audioTracks.population.volume = 0.5; // Population half quieter
+        audioTracks.noise.volume = 1.0;      
+        audioTracks.population.volume = 0.5; 
 
         function playCitySounds(cityId) {
             console.log(`Playing sounds for: ${cityId}`);
 
-            // Get city data
             const city = cityData[cityId];
             if (!city) {
                 console.error(`City data not found for: ${cityId}`);
                 return;
             }
 
-            // Stop all currently playing audio
             Object.values(audioTracks).forEach(audio => {
                 audio.pause();
                 audio.currentTime = 0;
             });
 
-            // Load audio files based on city's pollution levels
             const levels = city.audioLevels;
 
             audioTracks.air.src = audioFilePaths.air[levels.air];
@@ -554,37 +522,31 @@
             audioTracks.noise.src = audioFilePaths.noise[levels.noise];
             audioTracks.population.src = audioFilePaths.population[levels.population];
 
-            // Play tracks based on active layers
             updateAudioLayers();
         }
 
         function updateAudioLayers() {
             console.log('Updating audio layers:', activeLayers);
 
-            // Don't play anything if globally paused
             if (isAllPaused) {
                 return;
             }
 
-            // Play or pause each track based on active layers
             Object.keys(audioTracks).forEach(layer => {
                 const audio = audioTracks[layer];
 
                 if (activeLayers[layer] && audio.src) {
-                    // Play if layer is active and audio source is set
                     audio.play().catch(error => {
                         console.error(`Error playing ${layer} audio:`, error);
                     });
                 } else {
-                    // Pause if layer is inactive
                     audio.pause();
                 }
             });
         }
 
-        // ===========================
+       
         // PAUSE/PLAY CONTROL
-        // ===========================
         let isAllPaused = false;
         const pausePlayButton = document.getElementById('pause-play-button');
 
@@ -592,23 +554,19 @@
             isAllPaused = !isAllPaused;
 
             if (isAllPaused) {
-                // Pause all audio tracks
                 Object.values(audioTracks).forEach(audio => {
                     audio.pause();
                 });
                 pausePlayButton.textContent = 'Play All';
             } else {
-                // Resume audio based on active layers
                 updateAudioLayers();
                 pausePlayButton.textContent = 'Pause All';
             }
         });
 
-        // ===========================
+        
         // EVENT LISTENERS
-        // ===========================
 
-        // City selection from map
         document.querySelectorAll('.city-chip').forEach(chip => {
             chip.addEventListener('click', (e) => {
                 const cityId = e.target.dataset.city;
@@ -618,7 +576,6 @@
             });
         });
 
-        // City selection from list
         document.querySelectorAll('.city-list-chip').forEach(chip => {
             chip.addEventListener('click', (e) => {
                 const cityId = e.target.dataset.city;
@@ -628,7 +585,6 @@
             });
         });
 
-        // Sound layer toggles - handle checkbox changes
         document.querySelectorAll('.toggle-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', (e) => {
                 const container = e.target.closest('[data-layer]');
@@ -641,10 +597,7 @@
             });
         });
 
-        // ===========================
-        // INITIALIZATION
-        // ===========================
-        // Initialize with default city to set up SVG paths and audio
+  
         selectCity(currentCity);
 
         console.log('Sound of the City initialized');
