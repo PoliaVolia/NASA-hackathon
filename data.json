@@ -2,51 +2,61 @@
   "Dublin": {
     "AirPollution": 4,
     "GreenCoverage": 1,
-    "NoisePollution": 5
+    "NoisePollution": 5,
+    "Population":5
   },
   "Cork": {
     "AirPollution": 3,
     "GreenCoverage": 4,
-    "NoisePollution": 4
+    "NoisePollution": 4,
+    "Population":4
   },
   "Limerick": {
     "AirPollution": 2,
     "GreenCoverage": 4,
-    "NoisePollution": 4
+    "NoisePollution": 4,
+    "Population":3
   },
   "Galway": {
     "AirPollution": 5,
     "GreenCoverage": 3,
-    "NoisePollution": 3
+    "NoisePollution": 3,
+    "Population":3
   },
   "Waterford": {
     "AirPollution": 4,
     "GreenCoverage": 3,
-    "NoisePollution": 3
+    "NoisePollution": 3,
+    "Population":2
   },
   "Kilkenny": {
     "AirPollution": 1,
     "GreenCoverage": 5,
-    "NoisePollution": 5
+    "NoisePollution": 5,
+    "Population":1
   },
   "Drogheda": {
     "AirPollution": 2,
     "GreenCoverage": 4,
-    "NoisePollution": 4
+    "NoisePollution": 4,
+    "Population":2
   },
   "Sligo": {
     "AirPollution": 1,
     "GreenCoverage": 5,
-    "NoisePollution": 1
+    "NoisePollution": 1,
+    "Population":1
   },
   "Dundalk": {
     "AirPollution": 1,
     "GreenCoverage": 2,
-    "NoisePollution": 1
+    "NoisePollution": 1,
+    "Population":2
   },
   "Ennis": {
     "AirPollution": 1,
     "GreenCoverage": 2,
-    "NoisePollution": 1
+    "NoisePollution": 1,
+    "Population":1
   }
 }
