@@ -387,7 +387,7 @@
         }
 
         // ===========================
-        // AUDIO FUNCTIONS (Hooks for future implementation)
+        // AUDIO FUNCTIONS
         // ===========================
         const audioFilePaths = {
             air: {
@@ -420,13 +420,64 @@
             },
         };
 
+        // Create audio objects for each layer
+        const audioTracks = {
+            air: new Audio(),
+            green: new Audio(),
+            noise: new Audio(),
+            population: new Audio()
+        };
+
+        // Set all tracks to loop
+        Object.values(audioTracks).forEach(audio => {
+            audio.loop = true;
+        });
+
         function playCitySounds(cityId) {
             console.log(`Playing sounds for: ${cityId}`);
-            console.log('Active layers:', activeLayers);
+
+            // Get city data
+            const city = cityData[cityId];
+            if (!city) {
+                console.error(`City data not found for: ${cityId}`);
+                return;
+            }
+
+            // Stop all currently playing audio
+            Object.values(audioTracks).forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+
+            // Load audio files based on city's pollution levels
+            const levels = city.audioLevels;
+
+            audioTracks.air.src = audioFilePaths.air[levels.air];
+            audioTracks.green.src = audioFilePaths.green[levels.green];
+            audioTracks.noise.src = audioFilePaths.noise[levels.noise];
+            audioTracks.population.src = audioFilePaths.population[levels.population];
+
+            // Play tracks based on active layers
+            updateAudioLayers();
         }
 
         function updateAudioLayers() {
             console.log('Updating audio layers:', activeLayers);
+
+            // Play or pause each track based on active layers
+            Object.keys(audioTracks).forEach(layer => {
+                const audio = audioTracks[layer];
+
+                if (activeLayers[layer] && audio.src) {
+                    // Play if layer is active and audio source is set
+                    audio.play().catch(error => {
+                        console.error(`Error playing ${layer} audio:`, error);
+                    });
+                } else {
+                    // Pause if layer is inactive
+                    audio.pause();
+                }
+            });
         }
 
         // ===========================
