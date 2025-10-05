@@ -163,6 +163,12 @@ body {
     overflow: hidden;
 }
 
+.wave-container svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
 .map-container {
     display: flex;
     flex-direction: column;
